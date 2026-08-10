@@ -1,4 +1,4 @@
 {:schema "etzhayyim.migration/v1"
  :source {:repository "etzhayyim/root" :revision "afe5f1d995162277d2fb98f762705b53f9f695fd" :path "60-apps/etzhayyim-project-houki" :tree "261270141f82fd316653ad56f5b9c72ade49af60" :tracked-files 14 :bytes 45148}
- :destination {:repository "etzhayyim/com-etzhayyim-app-houki"}
+ :destination {:repository "cloud-itonami/app-houki"}
  :identity {:allowed-additions ["README.edn" "migration.edn"]}}
