@@ -1,4 +1,4 @@
 {:schema "etzhayyim.repository/v1"
- :name "com-etzhayyim-app-houki"
+ :name "app-houki"
  :kind :app
  :canonical-metadata :edn}
