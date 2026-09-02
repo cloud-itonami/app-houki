@@ -114,6 +114,40 @@ among them. Each of those guards was driven once by hand with a throwaway
 probe (`docs/operator-quickstart.md` §5) and behaved as the source reads;
 that is an observation of this commit, not a test anyone will re-run.
 
+### What `test/cross_plane_test.cljs` covers instead
+
+Every row of the table above was measured once, by hand, against `5b04279`.
+Prose does not notice when it stops being true, and nothing in this repo read
+two files together — `kotoba/test/houki.test.ts` imports four functions from
+one module and cannot see the adapter, the READMEs or `CLAUDE.md`; the adapter
+has no test at all.
+
+`test/cross_plane_test.cljs` (nbb, no install, no network) holds **17 of those
+facts** as checks: the nine exports and the nine routes agreeing; the unclosed
+brace; the four operations the suite imports and the five it does not; the four
+README parameter names that are not fields of the input types their endpoints
+use; the two coerced query fields no GET input declares; the unused
+`bearerToken`; the dropped `fetchedContent`; the statusless `notFound` returns
+that `mapStatus` answers 200; the twelve `CLAUDE.md` identifiers and its bot
+DID, absent from the source; the three coverage claims; and the `workspace:*`
+dependency with no workspace root.
+
+```bash
+nbb test/cross_plane_test.cljs      # 0 = all 17 hold, 1 = a fact moved, 2 = REFUSED
+```
+
+Most of these pin a *disagreement*, so **a red check can mean repair**: the
+message says which reading applies and which prose has to move with it. Exit 2
+is separate on purpose — it means an anchor or a file this reads is gone, so
+nothing was measured, and a checker blind to its input must not answer clean.
+
+Eighteen mutations (`scripts/maturity-loop/mutations.edn` in the superproject,
+suite `app-houki`) were each applied to this tree and seen to go red — thirteen
+at exit 1 and five at exit 2 — before any of this was committed.
+
+The five untested operations above are still untested. This suite reads the
+source; it does not execute it.
+
 ## Getting started
 
 `docs/operator-quickstart.md` — every command there was walked, and the output
