@@ -133,7 +133,7 @@ DID, absent from the source; the three coverage claims; and the `workspace:*`
 dependency with no workspace root.
 
 ```bash
-nbb test/cross_plane_test.cljk      # 0 = all 17 hold, 1 = a fact moved, 2 = REFUSED
+kbb --backend sci test/cross_plane_test.cljk      # 0 = all 17 hold, 1 = a fact moved, 2 = REFUSED
 ```
 
 Most of these pin a *disagreement*, so **a red check can mean repair**: the
