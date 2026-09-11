@@ -50,7 +50,7 @@
 ;;      measured. A checker that cannot see its input must not answer "clean";
 ;;      that is the failure mode CLAUDE.md's six questions are about.
 ;;
-;; Run: nbb test/cross_plane_test.cljs
+;; Run: nbb test/cross_plane_test.cljk
 
 (ns cross-plane-test
   (:require ["node:fs" :as fs]
@@ -60,7 +60,7 @@
 
 (def root
   "Repo root = the directory holding this test/ directory."
-  (path/resolve (path/join (path/dirname (or js/__filename "test/cross_plane_test.cljs")) "..")))
+  (path/resolve (path/join (path/dirname (or js/__filename "test/cross_plane_test.cljk")) "..")))
 
 ;; ── refusal ────────────────────────────────────────────────────────────────
 ;;
