@@ -14,7 +14,7 @@
 ;;
 ;; The facts checked here are *between* files, so they belong to no plane:
 ;; `kotoba/test/houki.test.ts` imports four functions from one module and
-;; cannot see the adapter, the adapter READMEs, or CLAUDE.md; the adapter has
+;; cannot see the adapter, the adapter READMEs, or AGENTS.md; the adapter has
 ;; no test at all.
 ;;
 ;; These checks read source text and do not execute the TypeScript. That is
@@ -48,7 +48,7 @@
 ;;   1  a check failed — the report names which fact moved
 ;;   2  REFUSED — a file or an anchor this reads is missing, so nothing was
 ;;      measured. A checker that cannot see its input must not answer "clean";
-;;      that is the failure mode CLAUDE.md's six questions are about.
+;;      that is the failure mode AGENTS.md's six questions are about.
 ;;
 ;; Run: kbb --backend sci test/cross_plane_test.cljk
 
@@ -260,11 +260,11 @@
         ps))))
 
 (def kotoba-readme (read-source "kotoba/README.md"))
-(def claude-md (read-source "CLAUDE.md"))
+(def claude-md (read-source "AGENTS.md"))
 
 (def adapter-pkg (read-source "xrpc-adapter/package.json"))
 
-;; CLAUDE.md's vocabulary: the command names, channels and identifiers it
+;; AGENTS.md's vocabulary: the command names, channels and identifiers it
 ;; describes as this actor's surface. README.md says none of them appears in
 ;; the source; that is the fact pinned here, and it is the one most likely to
 ;; move, because implementing any of them is the obvious next task.
@@ -427,24 +427,24 @@
                       (str " no longer has a notFound branch at all — re-read "
                            "mapStatus before trusting README.md's row on this")))))))
 
-  ;; --- disagreement: CLAUDE.md describes a design this tree never contained
+  ;; --- disagreement: AGENTS.md describes a design this tree never contained
   (when source-text
     (let [present (into #{} (filter #(str/includes? source-text %)) claude-md-vocabulary)]
       (check= "claude-md-vocabulary-appears-nowhere-in-the-source"
               #{} present
-              (str "CLAUDE.md identifiers found in the " (count source-files)
+              (str "AGENTS.md identifiers found in the " (count source-files)
                    " source files (probed " (count claude-md-vocabulary) ")"))))
 
   (when claude-md
     (let [did (second (re-find #"did:web:([\w.\-]+)" claude-md))]
       (if-not did
-        (refuse! "CLAUDE.md: no did:web: found")
+        (refuse! "AGENTS.md: no did:web: found")
         (check "claude-md-bot-did-is-not-the-did-the-source-writes"
                (and source-text (not (str/includes? source-text did)))
                (if (and source-text (str/includes? source-text did))
-                 (str "CLAUDE.md's DID did:web:" did " now appears in the source — "
+                 (str "AGENTS.md's DID did:web:" did " now appears in the source — "
                       "the two agree, and README.md's row saying they do not is stale")
-                 (str "CLAUDE.md names did:web:" did
+                 (str "AGENTS.md names did:web:" did
                       "; no source file mentions it (they use did:web:houki.etzhayyim.com)"))))))
 
   ;; --- disagreement: three coverage claims in two files
