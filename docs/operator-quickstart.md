@@ -62,7 +62,7 @@ lines — the suite imports only the document tier.
 This is the fastest way to see the findings recorded in `README.md`, and it
 needs no install.
 
-**2a. `CLAUDE.md`'s vocabulary is absent from the source.** Twelve
+**2a. `AGENTS.md`'s vocabulary is absent from the source.** Twelve
 identifiers it uses as the app's commands, channels, stores and pipeline
 stages:
 
@@ -92,7 +92,7 @@ murakumo           0
 **2b. Two DIDs for one actor:**
 
 ```bash
-grep -ohE 'did:web:[a-z0-9.-]+' CLAUDE.md kotoba/src/types.ts xrpc-adapter/wrangler.jsonc | sort | uniq -c
+grep -ohE 'did:web:[a-z0-9.-]+' AGENTS.md kotoba/src/types.ts xrpc-adapter/wrangler.jsonc | sort | uniq -c
 ```
 
 ```
@@ -100,7 +100,7 @@ grep -ohE 'did:web:[a-z0-9.-]+' CLAUDE.md kotoba/src/types.ts xrpc-adapter/wrang
    6 did:web:houki.etzhayyim.com
 ```
 
-The `1` is `CLAUDE.md`. Everything that runs uses the other one.
+The `1` is `AGENTS.md`. Everything that runs uses the other one.
 
 **2c. Three coverage claims, two files:**
 

@@ -15,7 +15,7 @@ section before trusting any prose elsewhere in the tree.
 
 There is no appview and no engine in this repo. Nothing here fetches a URL,
 strips HTML, calls an LLM, or detects drift — every one of those steps is
-*described* (`CLAUDE.md`, `kotoba/README.md`) and none is implemented. The
+*described* (`AGENTS.md`, `kotoba/README.md`) and none is implemented. The
 kotoba slice **persists a result someone else computed**: the caller passes
 a `contentSha256` and (optionally) a `contentCid`, and the slice records
 them. It does not read the document body, does not hash it, and does not
@@ -64,7 +64,7 @@ kotoba/                          9 functions, 18 tests (document tier only — s
 xrpc-adapter/                    Cloudflare Worker, 9 routes, route = houki.etzhayyim.com/xrpc/*
   src/index.ts                   syntax error at line 136 (TS1005) — see below
   wrangler.jsonc                 name houki-xrpc-adapter, vars ACTOR_DID / PDS_URL / L2_RPC_URL
-CLAUDE.md                        describes a different, earlier design (see below)
+AGENTS.md                        describes a different, earlier design (see below)
 README.edn                       {:kind :app}
 migration.edn                    provenance: etzhayyim/root 60-apps/etzhayyim-project-houki @ afe5f1d
 ```
@@ -79,8 +79,8 @@ in `docs/operator-quickstart.md` §1–§3; §5 drives the untested rule tier by
 
 | What a reader would conclude | What the tree actually contains |
 |---|---|
-| `CLAUDE.md`: nine hyphenated commands (`ingest-document` … `refresh-document` with drift detection), three "W Protocol" channels (`houki-feed` / `houki-alerts` / `houki-bundles`), `WRecord` writes to `yata`, cross-actor calls to `completer`, an ingestion pipeline `HTTP GET → Browser WIT fallback → stripHTML → LLM (murakumo)` | **None of those identifiers appear anywhere in the source** (`grep -c` = 0 for all twelve probed). The functions are camelCase (`ingestDocument` …), there is no `refreshDocument`, no channel, no fetch, no HTML stripping, no LLM call |
-| `CLAUDE.md`: bot DID `did:web:houki-h0uk1001.etzhayyim.com`, nanoid `h0uk1001` | The source, `wrangler.jsonc`, and every record DID use `did:web:houki.etzhayyim.com`. `h0uk1001` occurs only in `CLAUDE.md` |
+| `AGENTS.md`: nine hyphenated commands (`ingest-document` … `refresh-document` with drift detection), three "W Protocol" channels (`houki-feed` / `houki-alerts` / `houki-bundles`), `WRecord` writes to `yata`, cross-actor calls to `completer`, an ingestion pipeline `HTTP GET → Browser WIT fallback → stripHTML → LLM (murakumo)` | **None of those identifiers appear anywhere in the source** (`grep -c` = 0 for all twelve probed). The functions are camelCase (`ingestDocument` …), there is no `refreshDocument`, no channel, no fetch, no HTML stripping, no LLM call |
+| `AGENTS.md`: bot DID `did:web:houki-h0uk1001.etzhayyim.com`, nanoid `h0uk1001` | The source, `wrangler.jsonc`, and every record DID use `did:web:houki.etzhayyim.com`. `h0uk1001` occurs only in `AGENTS.md` |
 | `kotoba/README.md` line 7: "**8 of 8 (100%) canonical** houki commands ported + 1 helper = 9 total" | 9 functions are exported, so this line is right — but the same file's sibling table (line 94) says **`houki 4/8 active`**, and `kotoba/src/index.ts` line 8 says "Slice 1: 4 of 8 lexicons ported". Three statements of coverage in two files; one is current |
 | `kotoba/README.md`: "Wire-up to a Worker / LangServer pod XRPC handler is the next operator task" | The Worker exists (`xrpc-adapter/`) and routes all 9 functions. It also does not parse: `src/index.ts:132` opens `env: {` and never closes it; `tsc` reports exactly one error, `TS1005: ',' expected` at 136:6. `wrangler deploy` cannot have succeeded from this tree |
 | `xrpc-adapter/src/index.ts`: "Instantiates the Etzhayyim SDK from env bindings (PDS_URL + session)" | `extractBearerToken(req)` is called and its result is never used (`bearerToken`: 1 occurrence, the declaration). Even once the brace is fixed, no session reaches the SDK |
@@ -119,7 +119,7 @@ that is an observation of this commit, not a test anyone will re-run.
 Every row of the table above was measured once, by hand, against `5b04279`.
 Prose does not notice when it stops being true, and nothing in this repo read
 two files together — `kotoba/test/houki.test.ts` imports four functions from
-one module and cannot see the adapter, the READMEs or `CLAUDE.md`; the adapter
+one module and cannot see the adapter, the READMEs or `AGENTS.md`; the adapter
 has no test at all.
 
 `test/cross_plane_test.cljk` (nbb, no install, no network) holds **17 of those
@@ -128,7 +128,7 @@ brace; the four operations the suite imports and the five it does not; the four
 README parameter names that are not fields of the input types their endpoints
 use; the two coerced query fields no GET input declares; the unused
 `bearerToken`; the dropped `fetchedContent`; the statusless `notFound` returns
-that `mapStatus` answers 200; the twelve `CLAUDE.md` identifiers and its bot
+that `mapStatus` answers 200; the twelve `AGENTS.md` identifiers and its bot
 DID, absent from the source; the three coverage claims; and the `workspace:*`
 dependency with no workspace root.
 
